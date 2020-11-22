@@ -1,2 +1,2 @@
 all:
-	g++ -Wall main.cpp Device.cpp Web commands.cpp -o hello -lcurl -l wiringPi
+	g++  "main.cpp" "BusinessLogic.cpp" "Device.cpp" "Web commands.cpp" -o hello -lcurl -l wiringPi

@@ -1,5 +1,6 @@
 #pragma once
-#include "main.cpp"
+#include "Device interface.h"
+#include "Command interface.h"
 class BusinessLogic
 {
 public:
