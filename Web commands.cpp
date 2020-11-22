@@ -44,6 +44,19 @@ public:
         cout << "Fan percentage: " << fan << endl;
         return fan;
     }
+    string getRgb() {
+        int nach = _html.find("pumpColor");
+        nach = _html.find(":", nach);
+        nach = _html.find("\"", nach);
+        int kon = _html.find("\"", nach + 1);
+        string pumpColor = SampleString(_html, nach, kon);
+        nach = _html.find("coolerColor");
+        nach = _html.find(":", nach);
+        nach = _html.find("\"", nach);
+        kon = _html.find("\"", nach + 1);
+        string coolerRgb = SampleString(_html, nach, kon);
+        return pumpColor + " " + coolerRgb;
+    }
 private:
 	string _html;
 };

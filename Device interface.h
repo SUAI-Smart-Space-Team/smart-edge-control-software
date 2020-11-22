@@ -1,8 +1,10 @@
 #pragma once
-class interface
+#include"Web commands.cpp"
+#include<string>
+class Dinterface
 {
 public:
-	virtual void setFanspeed() = 0;
-	virtual void setRgb() = 0;
+	virtual void setFanspeed(int fan) = 0;
+	virtual void setRgb(std::string rgbstring) = 0;
 };
 
