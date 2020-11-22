@@ -1,4 +1,4 @@
-﻿#include "Device interface.h"
+﻿#include "Device.h"
 #include<wiringPi.h>
 #include <fcntl.h>
 #include <termios.h>
@@ -50,15 +50,13 @@ void closeCom(void)
     F_ID = -1;
     return;
 }
-class Device: public DeviceInterface
-{
-public:
-    void setFanspeed(int fan) {
+
+void Device::setFanspeed(int fan) {
         wiringPiSetup();
         pinMode(1, PWM_OUTPUT);
         pwmWrite(1, fan * 10);
-	}
-    void setRgb(string rgbstring) {
+}
+void Device::setRgb(string rgbstring) {
        bool res = openPort("/dev/ttyUSB0", B9600);
        if (!res)
        {
@@ -69,8 +67,4 @@ public:
        cout << "Pump and cooler colors: " << coolerBuff << endl;
        sendData(coolerBuff, rgbstring.length() + 1);
        closeCom();
-    }
-
-
-};
-
+}

@@ -1,7 +1,8 @@
-#include "Command interface.h"
+#include "Web command.h"
 #include <curl/curl.h>
-string SampleString(string arg, int nach, int kon) {
-    string str;
+#include <string>
+std::string SampleString(std::string arg, int nach, int kon) {
+    std::string str;
     for (int i = nach + 1; i < kon; i++) {
         str = str + arg[i];
     }
@@ -17,11 +18,9 @@ static size_t write_data(char* ptr, size_t size, size_t nmemb, string* data)
     else
         return 0;  
 }
-class WebCommand : public CommandInterface
-{
-	
-public:
-    WebCommand() {
+
+
+WebCommand::WebCommand() {
         while (_html == "[{\"pumpColor\":0},{\"coolerColor\":0},{\"pumpSpeed\":0},{\"coolerSpeed\":0}]") {
             CURL* curl;
             curl = curl_easy_init();
@@ -32,8 +31,8 @@ public:
             curl_easy_cleanup(curl);
             cout << _html << endl;
         }
-	}
-    int getFanspeed() {
+}
+int WebCommand::getFanspeed() {
         int nach = _html.find("coolerSpeed");
         nach = _html.find(":", nach);
         nach = _html.find("\"", nach);
@@ -43,21 +42,19 @@ public:
         int fan = stoi(fanspeed);
         cout << "Fan percentage: " << fan << endl;
         return fan;
-    }
-    string getRgb() {
+}
+std::string WebCommand::getRgb() {
         int nach = _html.find("pumpColor");
         nach = _html.find(":", nach);
         nach = _html.find("\"", nach);
         int kon = _html.find("\"", nach + 1);
-        string pumpColor = SampleString(_html, nach, kon);
+        std::string pumpColor = SampleString(_html, nach, kon);
         nach = _html.find("coolerColor");
         nach = _html.find(":", nach);
         nach = _html.find("\"", nach);
         kon = _html.find("\"", nach + 1);
-        string coolerRgb = SampleString(_html, nach, kon);
+        std::string coolerRgb = SampleString(_html, nach, kon);
         return pumpColor + " " + coolerRgb;
-    }
-private:
-	string _html;
-};
+}
+
 

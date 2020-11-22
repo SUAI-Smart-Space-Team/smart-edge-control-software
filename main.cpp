@@ -1,7 +1,7 @@
 #include "Device interface.h"
 #include "Command interface.h"
-#include "Device.cpp"
-#include "Web commands.cpp"
+#include "Device.h"
+#include "Web command.h"
 #include "BusinessLogic.h"
 int main() {
 	CommandInterface* ci = new WebCommand();
