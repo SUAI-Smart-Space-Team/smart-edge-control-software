@@ -50,7 +50,7 @@ void closeCom(void)
     F_ID = -1;
     return;
 }
-class Device: public Dinterface
+class Device: public DeviceInterface
 {
 public:
     void setFanspeed(int fan) {

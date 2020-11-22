@@ -1,9 +1,8 @@
 #pragma once
-#include"Device.cpp"
 #include <string>
 #include<iostream>
 using namespace std;
-class Web
+class CommandInterface
 {
 public:
 	virtual string getRgb() = 0;

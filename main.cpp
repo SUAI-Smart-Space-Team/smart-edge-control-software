@@ -1,12 +1,11 @@
-#include"Device interface.h"
-#include"Command interface.h"
-
-class Logic : virtual public Device, virtual public Interface {
-	
-};
+#include "Device interface.h"
+#include "Command interface.h"
+#include "Device.cpp"
+#include "Web commands.cpp"
+#include "BusinessLogic.h"
 int main() {
-	Logic value;
-	value.setFanspeed(value.getFanspeed());
-	value.setRgb(value.getRgb());
+	CommandInterface* ci = new WebCommand();
+	DeviceInterface* di = new Device();
+	BusinessLogic(ci, di);
 	return 0;
 }

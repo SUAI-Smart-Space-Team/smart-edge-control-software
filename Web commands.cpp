@@ -17,11 +17,11 @@ static size_t write_data(char* ptr, size_t size, size_t nmemb, string* data)
     else
         return 0;  
 }
-class Interface: public Web
+class WebCommand : public CommandInterface
 {
 	
 public:
-	Interface() {
+    WebCommand() {
         while (_html == "[{\"pumpColor\":0},{\"coolerColor\":0},{\"pumpSpeed\":0},{\"coolerSpeed\":0}]") {
             CURL* curl;
             curl = curl_easy_init();

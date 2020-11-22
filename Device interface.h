@@ -1,7 +1,6 @@
 #pragma once
-#include"Web commands.cpp"
 #include<string>
-class Dinterface
+class DeviceInterface
 {
 public:
 	virtual void setFanspeed(int fan) = 0;
