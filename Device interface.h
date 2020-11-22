@@ -1,5 +1,5 @@
 #pragma once
-class interface
+class Dinterface
 {
 public:
 	virtual void setFanspeed() = 0;

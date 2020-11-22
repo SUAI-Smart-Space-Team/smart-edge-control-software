@@ -9,6 +9,7 @@
 #include<string>
 using namespace std;
 int F_ID = -1;
+
 bool openPort(const char* COM_name, speed_t speed)
 {
     F_ID = open(COM_name, O_RDWR | O_NOCTTY);
@@ -49,10 +50,10 @@ void closeCom(void)
     F_ID = -1;
     return;
 }
-class Device: public interface
+class Device: public Dinterface
 {
 public:
-	void setFanspeed(int fan) {
+    void setFanspeed(int fan) {
         wiringPiSetup();
         pinMode(1, PWM_OUTPUT);
         pwmWrite(1, fan * 10);
@@ -69,7 +70,7 @@ public:
        sendData(coolerBuff, rgbstring.length() + 1);
        closeCom();
     }
-private:
+
 
 };
 
