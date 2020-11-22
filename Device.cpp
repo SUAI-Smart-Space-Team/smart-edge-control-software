@@ -64,7 +64,7 @@ public:
        {
            printf("Íåâîçìîæíî îòêðûòü COM ïîðò\n");
        }
-       unsigned char coolerBuff[rgbstring.length() + 1];
+       unsigned char* coolerBuff = new unsigned char[rgbstring.length() + 1];
        memcpy(coolerBuff, rgbstring.c_str(), rgbstring.size() + 1);
        cout << "Pump and cooler colors: " << coolerBuff << endl;
        sendData(coolerBuff, rgbstring.length() + 1);
