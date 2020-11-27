@@ -1,0 +1,1 @@
+# smart-edge-monitoring-software
