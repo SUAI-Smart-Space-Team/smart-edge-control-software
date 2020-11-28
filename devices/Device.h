@@ -1,5 +1,5 @@
 #pragma once
-#include "Device interface.h"
+#include "../DeviceInterface.h"
 class Device :
     public DeviceInterface
 {

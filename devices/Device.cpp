@@ -8,7 +8,6 @@
 #include<iostream>
 #include<string>
 #include <string.h>
-using namespace std;
 int F_ID = -1;
 
 bool openPort(const char* COM_name, speed_t speed)
@@ -57,7 +56,7 @@ void Device::setFanspeed(int fan) {
         pinMode(1, PWM_OUTPUT);
         pwmWrite(1, fan * 10);
 }
-void Device::setRgb(string rgbstring) {
+void Device::setRgb(std::string rgbstring) {
        bool res = openPort("/dev/ttyUSB0", B9600);
        if (!res)
        {
@@ -65,7 +64,7 @@ void Device::setRgb(string rgbstring) {
        }
        unsigned char* coolerBuff = new unsigned char[rgbstring.length() + 1];
        memcpy(coolerBuff, rgbstring.c_str(), rgbstring.size() + 1);
-       cout << "Pump and cooler colors: " << coolerBuff << endl;
+       std::cout << "Pump and cooler colors: " << coolerBuff << std::endl;
        sendData(coolerBuff, rgbstring.length() + 1);
        closeCom();
 }

@@ -8,7 +8,7 @@ std::string SampleString(std::string arg, int nach, int kon) {
     }
     return str;
 }
-static size_t write_data(char* ptr, size_t size, size_t nmemb, string* data)
+static size_t write_data(char* ptr, size_t size, size_t nmemb, std::string* data)
 {
     if (data)
     {
@@ -29,7 +29,7 @@ WebCommand::WebCommand() {
             curl_easy_setopt(curl, CURLOPT_WRITEDATA, &_html);
             curl_easy_perform(curl);
             curl_easy_cleanup(curl);
-            cout << _html << endl;
+            std::cout << _html << std::endl;
         }
 }
 int WebCommand::getFanspeed() {
@@ -37,10 +37,10 @@ int WebCommand::getFanspeed() {
         nach = _html.find(":", nach);
         nach = _html.find("\"", nach);
         int kon = _html.find("\"", nach + 1);
-        string fanspeed = SampleString(_html, nach, kon);
-        cout << "fanspeed " << fanspeed << endl;
+        std::string fanspeed = SampleString(_html, nach, kon);
+        std::cout << "fanspeed " << fanspeed << std::endl;
         int fan = stoi(fanspeed);
-        cout << "Fan percentage: " << fan << endl;
+        std::cout << "Fan percentage: " << fan << std::endl;
         return fan;
 }
 std::string WebCommand::getRgb() {

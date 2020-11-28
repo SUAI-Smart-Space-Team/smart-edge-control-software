@@ -1,6 +1,6 @@
 #pragma once
-#include<string>
-#include "Command interface.h"
+#include <string>
+#include "../CommandInterface.h"
 class WebCommand : public CommandInterface {
 public:
 	WebCommand();

@@ -1,11 +1,15 @@
-#include "Device interface.h"
-#include "Command interface.h"
-#include "Device.h"
-#include "Web command.h"
+#include "DeviceInterface.h"
+#include "CommandInterface.h"
+#include "devices/Device.h"
+#include "commands/Web command.h"
 #include "BusinessLogic.h"
 int main() {
-	CommandInterface* ci = new WebCommand();
-	DeviceInterface* di = new Device();
-	BusinessLogic(ci, di);
+	while (1) {
+		CommandInterface* ci = new WebCommand();
+		DeviceInterface* di = new Device();
+		BusinessLogic(ci, di);
+		delete(ci);
+		delete(di);
+	}
 	return 0;
 }

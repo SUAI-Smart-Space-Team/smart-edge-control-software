@@ -1,11 +1,10 @@
 #pragma once
 #include <string>
-#include<iostream>
-using namespace std;
+#include <iostream>
 class CommandInterface
 {
 public:
-	virtual string getRgb() = 0;
+	virtual std::string getRgb() = 0;
 	virtual int getFanspeed() = 0;
 
 };
