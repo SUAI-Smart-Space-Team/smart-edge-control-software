@@ -1,7 +1,7 @@
 #include "DeviceInterface.h"
 #include "CommandInterface.h"
 #include "devices/Device.h"
-#include "commands/Web command.h"
+#include "commands/WebCommand.h"
 #include "BusinessLogic.h"
 int main() {
 	while (1) {

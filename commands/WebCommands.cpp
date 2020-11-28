@@ -1,4 +1,4 @@
-#include "Web command.h"
+#include "WebCommand.h"
 #include <curl/curl.h>
 #include <string>
 std::string SampleString(std::string arg, int nach, int kon) {
