@@ -1,12 +1,19 @@
 # refactoring
-Файл main.cpp вызывает бизнесс логику приложения.
-<br>
-Файлы BusinessLogic.h и BusinessLogic.cpp образуют бизнесс логику приложения, которая применяет полученные параметры.
-<br>
-Файл Command interface.h содержит в себе интерфейс комманд для получения цвета подсветки и скорости кулера.
-<br>
-Файл Device interface.h содержит в себе интерфейс комманд для установки полученных значений цвета подсветки и скорости кулера
-<br>
-Файлы Web command.h и Web commands.cpp содержат в себе реализацию получения значений цвета подсветки и скорости кулера из интернета с помощью библиотеки curl
-<br>
-Файлы Device.h и Device.cpp содержат в себе реализацию установки полученных значений цвета подсветки  через COM порт с помощью библиотек linux на плату arduino uno, а также скорости кулера с помощью библиотеки wiringPi на плате raspberry pi 4 под системой raspbian
+Dependencies:
+- CURl library
+- wiringPi library
+# Getting Started
+## compiling 
+To compile from the command line, use the command below:
+```
+    make
+```
+After compiling you can clean directory by using
+```
+    make clean
+```
+##  Running programm
+To run the application, use the following command:
+```
+    ./hello
+```
