@@ -1,15 +1,16 @@
-#include "DeviceInterface.h"
-#include "CommandInterface.h"
 #include "devices/Device.h"
 #include "commands/WebCommand.h"
 #include "BusinessLogic.h"
+const char* Link = "http://chupr.iotfox.ru/chubrWorker.cgi?method=getTelemetry";
 int main() {
-	while (1) {
-		CommandInterface* ci = new WebCommand();
+	
+		CommandInterface* ci = new WebCommand(Link);
 		DeviceInterface* di = new Device();
-		BusinessLogic(ci, di);
+		while (1) {
+			BusinessLogic(ci, di);
+		}
 		delete(ci);
 		delete(di);
-	}
+	
 	return 0;
 }

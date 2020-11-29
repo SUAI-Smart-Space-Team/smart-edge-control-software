@@ -1,6 +1,6 @@
 #pragma once
-#include "DeviceInterface.h"
-#include "CommandInterface.h"
+#include "devices/DeviceInterface.h"
+#include "commands/CommandInterface.h"
 class BusinessLogic
 {
 public:

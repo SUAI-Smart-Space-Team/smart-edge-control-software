@@ -60,7 +60,7 @@ void Device::setRgb(std::string rgbstring) {
        bool res = openPort("/dev/ttyUSB0", B9600);
        if (!res)
        {
-           printf("Íåâîçìîæíî îòêðûòü COM ïîðò\n");
+           printf("error with opening port\n");
        }
        unsigned char* coolerBuff = new unsigned char[rgbstring.length() + 1];
        memcpy(coolerBuff, rgbstring.c_str(), rgbstring.size() + 1);
