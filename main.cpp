@@ -19,7 +19,7 @@ int main() {
                 return 0;
             }
             catch (int a) {
-				std::cout << "error with opening port";
+				std::cerr << "error with opening port";
             }
 		}
 	return 0;
