@@ -2,12 +2,9 @@
 #include<wiringPi.h>
 #include <fcntl.h>
 #include <termios.h>
-#include <errno.h>
-#include <sys/ioctl.h>
 #include <unistd.h>
 #include<iostream>
 #include<string>
-#include <string.h>
 int F_ID = -1;
 
 bool openPort(const char* COM_name, speed_t speed)
@@ -15,8 +12,7 @@ bool openPort(const char* COM_name, speed_t speed)
     F_ID = open(COM_name, O_RDWR | O_NOCTTY);
     if (F_ID == -1)
     {
-        char* errmsg = strerror(errno);
-        printf("%s\n", errmsg);
+        throw -1;
         return false;
     }
     struct termios options; 
@@ -34,14 +30,10 @@ bool openPort(const char* COM_name, speed_t speed)
     tcsetattr(F_ID, TCSANOW, &options); 
     return true;
 }
-int sendData(unsigned char* buff, int len)
+int sendData(const char* buff, int len)
 {
     int n = write(F_ID, buff, len);
-    if (n == -1)
-    {
-        char* errmsg = strerror(errno);
-        printf("%s\n", errmsg);
-    }
+    if (n == -1) throw -1;
     return n;
 }
 void closeCom(void)
@@ -50,21 +42,16 @@ void closeCom(void)
     F_ID = -1;
     return;
 }
-
-void Device::setFanspeed(int fan) {
-        wiringPiSetup();
-        pinMode(1, PWM_OUTPUT);
-        pwmWrite(1, fan * 10);
+int convertPercentageToPwm(int percent) {
+    return percent * 10;
 }
-void Device::setRgb(std::string rgbstring) {
-       bool res = openPort("/dev/ttyUSB0", B9600);
-       if (!res)
-       {
-           printf("error with opening port\n");
-       }
-       unsigned char* coolerBuff = new unsigned char[rgbstring.length() + 1];
-       memcpy(coolerBuff, rgbstring.c_str(), rgbstring.size() + 1);
-       std::cout << "Pump and cooler colors: " << coolerBuff << std::endl;
-       sendData(coolerBuff, rgbstring.length() + 1);
-       closeCom();
+void Device::setFanspeed(int fanSpeedPercentage) {
+    wiringPiSetup();
+    pinMode(1, PWM_OUTPUT);
+    pwmWrite(1, convertPercentageToPwm(fanSpeedPercentage));
+}
+void Device::setRgb(std::string rgbString) {
+    bool res = openPort("/dev/ttyUSB0", B9600);
+    sendData(rgbString.c_str(), rgbString.length() + 1);
+    closeCom();
 }

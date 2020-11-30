@@ -6,6 +6,5 @@ class CommandInterface
 public:
 	virtual std::string getRgb() = 0;
 	virtual int getFanspeed() = 0;
-
 };
 
