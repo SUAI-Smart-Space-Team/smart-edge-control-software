@@ -5,8 +5,8 @@ class WebCommand : public CommandInterface {
 public:
 	WebCommand(std::string Link);
 	void UpdateHtml();
-	int getFanspeed();
-	std::string getRgb();
+	int getFanspeed() override;
+	std::string getRgb() override;
 	std::string findValue(std::string parameter);
 private:
 	std::string _html;

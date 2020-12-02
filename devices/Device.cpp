@@ -45,12 +45,12 @@ void closeCom(void)
 int convertPercentageToPwm(int percent) {
     return percent * 10;
 }
-void Device::setFanspeed(int fanSpeedPercentage) {
+void Device::setFanspeed(int fanSpeedPercentage)  {
     wiringPiSetup();
     pinMode(1, PWM_OUTPUT);
     pwmWrite(1, convertPercentageToPwm(fanSpeedPercentage));
 }
-void Device::setRgb(std::string rgbString) {
+void Device::setRgb(std::string rgbString)  {
     bool res = openPort("/dev/ttyUSB0", B9600);
     sendData(rgbString.c_str(), rgbString.length() + 1);
     closeCom();
