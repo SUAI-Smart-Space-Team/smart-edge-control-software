@@ -10,7 +10,7 @@ static size_t write_data(char* ptr, size_t size, size_t nmemb, std::string* data
     return size * nmemb;
 }
 
-WebCommand::WebCommand(std::string Link) {
+explicit WebCommand::WebCommand(std::string Link) {
     link = Link;
 }
 
