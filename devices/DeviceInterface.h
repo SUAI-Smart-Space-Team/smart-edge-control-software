@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DEVICEINTERFACE_H
+#define DEVICEINTERFACE_H
 #include <string>
 class DeviceInterface
 {
@@ -7,3 +8,4 @@ public:
 	virtual void setRgb(std::string rgbstring) = 0;
 };
 
+#endif

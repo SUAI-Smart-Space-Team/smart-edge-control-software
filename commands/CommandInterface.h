@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COMMANDINTERFACE_H
+#define COMMANDINTERFACE_H
 #include <string>
 #include <iostream>
 class CommandInterface
@@ -8,3 +9,4 @@ public:
 	virtual int getFanspeed() = 0;
 };
 
+#endif

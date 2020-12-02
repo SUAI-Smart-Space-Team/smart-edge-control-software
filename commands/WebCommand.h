@@ -1,4 +1,5 @@
-#pragma once
+#ifndef WEBCOMMAND_H
+#define WEBCOMMAND_H
 #include <string>
 #include "CommandInterface.h"
 class WebCommand : public CommandInterface {
@@ -12,3 +13,4 @@ private:
 	std::string _html;
 	std::string link;
 };
+#endif
