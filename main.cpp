@@ -21,6 +21,7 @@ int main() {
         catch (int a) {
 			std::cerr << "error with opening port";
          }
+		sleep(5);
 	}
 	return 0;
 }
