@@ -30,7 +30,13 @@ std::string WebCommand::findValue(std::string parameter) {
     from = _html.find(":", from);
     from = _html.find("\"", from);
     int to = _html.find("\"", from + 1);
-    return _html.substr(from + 1, to - from - 1);
+    const char* quote = "%22";
+    if (_html.find(quote, from + 1, to - from - 1) == std::string::npos) {
+        return _html.substr(from + 1, to - from - 1);
+    }
+    else {
+        throw std::invalid_argument("" + _html);
+    }
 }
 
 int WebCommand::getFanspeed() {
