@@ -41,9 +41,19 @@ std::string WebCommand::findValue(std::string parameter) {
 
 int WebCommand::getFanspeed() {
     WebCommand::UpdateHtml();
-    int fan = stoi(findValue(std::string("coolerSpeed")));
-    if (fan < 0 || fan > 100) throw std::invalid_argument(""+fan);
-    return fan;
+    try {
+        int fan = stoi(findValue(std::string("coolerSpeed")));
+        if (fan < 0 || fan > 100) throw std::invalid_argument("" + fan);
+        return fan;
+    }
+    catch (std::invalid_argument& err) {
+        std::cerr << "caught wrong argument exception with string: " << err.what();
+        return -1;
+    }
+    catch (std::out_of_range& err) {
+        std::cerr << "caught out of range exception with string: " << err.what();
+        return -1;
+    }
 }
 
 std::string WebCommand::getRgb() {

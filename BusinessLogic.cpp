@@ -1,5 +1,7 @@
 #include "BusinessLogic.h"
 BusinessLogic::BusinessLogic(CommandInterface* ci, DeviceInterface* di) {
-	di->setFanspeed(ci->getFanspeed());
+	if (int temp = ci->getFanspeed() != -1) {
+		di->setFanspeed(temp);
+	}
 	di->setRgb(ci->getRgb());
 }

@@ -6,29 +6,34 @@
 #include<iostream>
 #include<string>
 int F_ID = -1;
-
+class portOpeningException : std::exception {};
 bool openPort(const char* COM_name, speed_t speed)
 {
-    F_ID = open(COM_name, O_RDWR | O_NOCTTY);
-    if (F_ID == -1)
-    {
-        throw -1;
+    try {
+        F_ID = open(COM_name, O_RDWR | O_NOCTTY);
+        if (F_ID == -1)
+        {
+            throw portOpeningException();
+        }
+        struct termios options;
+        tcgetattr(F_ID, &options);
+        cfsetispeed(&options, speed);
+        cfsetospeed(&options, speed);
+        options.c_cc[VTIME] = 20;
+        options.c_cc[VMIN] = 0;
+        options.c_cflag &= ~PARENB;
+        options.c_cflag &= ~CSTOPB;
+        options.c_cflag &= ~CSIZE;
+        options.c_cflag |= CS8;
+        options.c_lflag = 0;
+        options.c_oflag &= ~OPOST;
+        tcsetattr(F_ID, TCSANOW, &options);
+        return true;
+    }
+    catch (portOpeningException& e) {
+        std::cerr << "error with opening port" << std::endl;
         return false;
     }
-    struct termios options; 
-    tcgetattr(F_ID, &options); 
-    cfsetispeed(&options, speed);
-    cfsetospeed(&options, speed); 
-    options.c_cc[VTIME] = 20; 
-    options.c_cc[VMIN] = 0; 
-    options.c_cflag &= ~PARENB; 
-    options.c_cflag &= ~CSTOPB; 
-    options.c_cflag &= ~CSIZE;  
-    options.c_cflag |= CS8;  
-    options.c_lflag = 0;
-    options.c_oflag &= ~OPOST;
-    tcsetattr(F_ID, TCSANOW, &options); 
-    return true;
 }
 int sendData(const char* buff, int len)
 {
@@ -51,7 +56,10 @@ void Device::setFanspeed(int fanSpeedPercentage)  {
     pwmWrite(1, convertPercentageToPwm(fanSpeedPercentage));
 }
 void Device::setRgb(std::string rgbString)  {
+    
     bool res = openPort("/dev/ttyUSB0", B9600);
-    sendData(rgbString.c_str(), rgbString.length() + 1);
-    closeCom();
+    if (res) {
+        sendData(rgbString.c_str(), rgbString.length() + 1);
+        closeCom();
+    }
 }
