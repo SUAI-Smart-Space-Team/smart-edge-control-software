@@ -40,7 +40,6 @@ void closeCom(void)
 {
     close(F_ID);
     F_ID = -1;
-    return;
 }
 int convertPercentageToPwm(int percent) {
     return percent * 10;
