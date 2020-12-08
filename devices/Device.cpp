@@ -5,11 +5,12 @@
 #include <unistd.h>
 #include<iostream>
 #include<string>
-int F_ID = -1;
+
 class portOpeningException : std::exception {};
 bool openPort(const char* COM_name, speed_t speed)
 {
     try {
+        int F_ID = -1;
         F_ID = open(COM_name, O_RDWR | O_NOCTTY);
         if (F_ID == -1)
         {
