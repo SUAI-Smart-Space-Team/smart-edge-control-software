@@ -10,5 +10,4 @@ int main() {
 		BusinessLogic(ci, di);
 		sleep(5);
 	}
-	return 0;
 }
