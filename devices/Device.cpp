@@ -53,7 +53,7 @@ void Device::setRgb(std::string rgbString)  {
     
     bool res = openPort("/dev/ttyUSB0", B9600);
     if (res) {
-        if (sendData(rgbString.c_str(), rgbString.length() + 1) == -1) {
+        if (sendData(rgbString.c_str(), rgbString.length()) == -1) {
             std::cerr << "message lost" << std::endl;
         }
         closeCom();
