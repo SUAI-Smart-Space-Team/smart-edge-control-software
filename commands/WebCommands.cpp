@@ -43,7 +43,10 @@ int WebCommand::getFanspeed() {
     WebCommand::UpdateHtml();
     try {
         int fan = stoi(findValue(std::string("coolerSpeed")));
-        if (fan < 0 || fan > 100) throw std::invalid_argument("" + fan);
+        if (fan < 0 || fan > 100) {
+            std::cerr << "wrong fan speed: " << fan ;
+            return -1;
+        }
         return fan;
     }
     catch (std::invalid_argument& err) {
