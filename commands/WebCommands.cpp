@@ -35,7 +35,7 @@ std::string WebCommand::findValue(std::string parameter) {
         return _html.substr(from + 1, to - from - 1);
     }
     else {
-        throw std::invalid_argument("" + _html);
+        throw std::invalid_argument(_html.c_str());
     }
 }
 
