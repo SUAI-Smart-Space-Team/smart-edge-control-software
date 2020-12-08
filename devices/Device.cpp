@@ -9,12 +9,12 @@
 class portOpeningException : std::exception {};
 bool openPort(const char* COM_name, speed_t speed)
 {
-    try {
         int F_ID = -1;
         F_ID = open(COM_name, O_RDWR | O_NOCTTY);
         if (F_ID == -1)
         {
-            throw portOpeningException();
+            std::cerr << "error with opening port" << std::endl;
+            return false;
         }
         struct termios options;
         tcgetattr(F_ID, &options);
@@ -30,16 +30,10 @@ bool openPort(const char* COM_name, speed_t speed)
         options.c_oflag &= ~OPOST;
         tcsetattr(F_ID, TCSANOW, &options);
         return true;
-    }
-    catch (portOpeningException& e) {
-        std::cerr << "error with opening port" << std::endl;
-        return false;
-    }
 }
 int sendData(const char* buff, int len)
 {
     int n = write(F_ID, buff, len);
-    if (n == -1) throw -1;
     return n;
 }
 void closeCom(void)
@@ -60,7 +54,9 @@ void Device::setRgb(std::string rgbString)  {
     
     bool res = openPort("/dev/ttyUSB0", B9600);
     if (res) {
-        sendData(rgbString.c_str(), rgbString.length() + 1);
+        if (sendData(rgbString.c_str(), rgbString.length() + 1) == -1) {
+            std::cerr << "message lost" << std::endl;
+        }
         closeCom();
     }
 }
