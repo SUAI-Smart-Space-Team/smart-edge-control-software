@@ -49,11 +49,11 @@ int WebCommand::getFanspeed() {
         }
         return fan;
     }
-    catch (std::invalid_argument& err) {
+    catch (const std::invalid_argument& err) {
         std::cerr << "caught wrong argument exception with string: " << err.what();
         return -1;
     }
-    catch (std::out_of_range& err) {
+    catch (const std::out_of_range& err) {
         std::cerr << "caught out of range exception with string: " << err.what();
         return -1;
     }
