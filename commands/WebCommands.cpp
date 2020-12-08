@@ -3,10 +3,10 @@
 #include <string>
 
 #include <curl/curl.h>
-static size_t write_data(char* ptr, size_t size, size_t nmemb, std::string* data)
+static size_t write_data(char* ptr, size_t size, size_t nmemb, std::string& data)
 {
-    if (!data) return 0;
-    data->append(ptr, size * nmemb);
+    if (data != "") return 0;
+    data.append(ptr, size * nmemb);
     return size * nmemb;
 }
 
