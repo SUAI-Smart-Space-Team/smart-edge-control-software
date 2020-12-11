@@ -10,4 +10,7 @@ int main() {
 		BusinessLogic(ci, di);
 		sleep(5);
 	}
+	delete(ci);
+	delete(di);
+	return 0;
 }
