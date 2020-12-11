@@ -44,7 +44,7 @@ void closeCom(void)
 int convertPercentageToPwm(int percent) {
     return percent * 10;
 }
-void Device::setFanspeed(int fanSpeedPercentage)  {
+void Device::setSpeed(int fanSpeedPercentage)  {
     wiringPiSetup();
     pinMode(1, PWM_OUTPUT);
     pwmWrite(1, convertPercentageToPwm(fanSpeedPercentage));

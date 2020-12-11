@@ -4,7 +4,7 @@
 class DeviceInterface
 {
 public:
-	virtual void setFanspeed(int fan) = 0;
+	virtual void setSpeed(int fan) = 0;
 	virtual void setRgb(std::string rgbstring) = 0;
 };
 
