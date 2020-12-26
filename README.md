@@ -15,5 +15,5 @@ After compiling you can clean directory by using
 ##  Running programm
 To run the application, use the following command:
 ```
-    ./hello
+    sudo ./hello
 ```
