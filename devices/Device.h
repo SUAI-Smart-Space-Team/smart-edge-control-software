@@ -6,5 +6,6 @@ class Device : public DeviceInterface
 public:
     void setSpeed(int fan) override;
     void setRgb(std::string rgbstring) override;
+    int convertPercentageToPwm(int percent);
 };
 #endif
