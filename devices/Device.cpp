@@ -7,17 +7,17 @@
 #include<string>
 
 class portOpeningException : std::exception {};
-bool openPort(const char* COM_name, speed_t speed)
+bool openPort(const char* COM_name, speed_t speed,int* F_ID)
 {
-        int F_ID = -1;
-        F_ID = open(COM_name, O_RDWR | O_NOCTTY);
-        if (F_ID == -1)
+        
+        *F_ID = open(COM_name, O_RDWR | O_NOCTTY);
+        if (*F_ID == -1)
         {
             std::cerr << "error with opening port" << std::endl;
             return false;
         }
         struct termios options;
-        tcgetattr(F_ID, &options);
+        tcgetattr(*F_ID, &options);
         cfsetispeed(&options, speed);
         cfsetospeed(&options, speed);
         options.c_cc[VTIME] = 20;
@@ -28,18 +28,18 @@ bool openPort(const char* COM_name, speed_t speed)
         options.c_cflag |= CS8;
         options.c_lflag = 0;
         options.c_oflag &= ~OPOST;
-        tcsetattr(F_ID, TCSANOW, &options);
+        tcsetattr(*F_ID, TCSANOW, &options);
         return true;
 }
-int sendData(const char* buff, int len)
+int sendData(const char* buff, int len,int* F_ID)
 {
-    int n = write(F_ID, buff, len);
+    int n = write(*F_ID, buff, len);
     return n;
 }
-void closeCom(void)
+void closeCom(int* F_ID)
 {
-    close(F_ID);
-    F_ID = -1;
+    close(*F_ID);
+    *F_ID = -1;
 }
 int convertPercentageToPwm(int percent) {
     return percent * 10;
@@ -50,12 +50,12 @@ void Device::setSpeed(int fanSpeedPercentage)  {
     pwmWrite(1, convertPercentageToPwm(fanSpeedPercentage));
 }
 void Device::setRgb(std::string rgbString)  {
-    
-    bool res = openPort("/dev/ttyUSB0", B9600);
+    int F_ID = -1;
+    bool res = openPort("/dev/ttyUSB0", B9600,&F_ID);
     if (res) {
-        if (sendData(rgbString.c_str(), rgbString.length()) == -1) {
+        if (sendData(rgbString.c_str(), rgbString.length(),&F_ID) == -1) {
             std::cerr << "message lost" << std::endl;
         }
-        closeCom();
+        closeCom(&F_ID);
     }
 }
