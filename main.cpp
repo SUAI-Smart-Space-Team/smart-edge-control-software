@@ -1,4 +1,5 @@
 #include "BusinessLogic.h"
+#include <unistd.h>
 
 #include "devices/Device.h"
 #include "commands/WebCommand.h"
