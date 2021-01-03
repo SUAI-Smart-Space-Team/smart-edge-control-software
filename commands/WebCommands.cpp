@@ -23,7 +23,7 @@ void WebCommand::UpdateHtml() {
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &_html);
     curl_easy_perform(curl);
     curl_easy_cleanup(curl);
-    std::clog << _html << std::endl;       
+    //std::clog << _html << std::endl;       
 }
 
 std::string WebCommand::findValue(std::string parameter) {
