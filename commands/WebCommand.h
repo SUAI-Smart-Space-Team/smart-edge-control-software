@@ -4,7 +4,7 @@
 #include "CommandInterface.h"
 class WebCommand : public CommandInterface {
 public:
-	explicit WebCommand(std::string Link);
+	explicit WebCommand(std::string_view Link);
 	void UpdateHtml();
 	int getFanspeed() override;
 	std::string getRgb() override;

@@ -10,7 +10,7 @@ static size_t write_data(char* ptr, size_t size, size_t nmemb, std::string& data
     return size * nmemb;
 }
 
-WebCommand::WebCommand(std::string Link): link(Link){
+WebCommand::WebCommand(std::string_view Link): link((std::string)Link){
  
 }
 
@@ -28,7 +28,10 @@ void WebCommand::UpdateHtml() {
 
 std::string WebCommand::findValue(std::string parameter) {
     int from = _html.find(parameter);
-    from = _html.find(":", from);
+    if (_html.find(parameter, from + 1) != std::string::npos) {
+        throw std::invalid_argument(_html.c_str());
+    }
+    from = _html.find(':', from);
     from = _html.find("\"", from);
     int to = _html.find("\"", from + 1);
     const char* quote = "%22";
@@ -62,7 +65,16 @@ int WebCommand::getFanspeed() {
 
 std::string WebCommand::getRgb() {
     WebCommand::UpdateHtml();
-    return findValue(std::string("pumpColor")) + " " + findValue(std::string("coolerColor"));
+    try {
+        std::string pColor = findValue(std::string("pumpColor"));
+        std::string cColor = findValue(std::string("coolerColor"));
+        return pColor + " " + cColor;
+    }
+    catch (const std::invalid_argument& err) {
+        std::cerr << "caught wrong argument exception with string: " << err.what();
+        return "";
+    }
+    
 }
 
 
