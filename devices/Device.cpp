@@ -1,6 +1,6 @@
 ﻿#include "Device.h"
-//#include <wiringPi.h>
-//#include <wiringSerial.h>
+#include <wiringPi.h>
+#include <wiringSerial.h>
 #include <iostream>
 #include <string>
 #include <tuple>
