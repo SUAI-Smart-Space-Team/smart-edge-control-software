@@ -1,11 +1,12 @@
 #ifndef DEVICEINTERFACE_H
 #define DEVICEINTERFACE_H
 #include <string>
+#include <tuple>
+#include <any>
 class DeviceInterface
 {
 public:
-	virtual void setSpeed(int fan) = 0;
-	virtual void setRgb(std::string rgbstring) = 0;
+	virtual void setValues(std::any param) = 0;
 };
 
 #endif

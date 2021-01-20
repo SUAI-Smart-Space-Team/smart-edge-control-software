@@ -5,8 +5,7 @@
 #include <curl/curl.h>
 static size_t write_data(char* ptr, size_t size, size_t nmemb, std::string& data)
 {
-    if (data != "") return 0;
-    data.append(ptr, size * nmemb);
+    data = (std::string)ptr;
     return size * nmemb;
 }
 
@@ -15,7 +14,7 @@ WebCommand::WebCommand(std::string_view Link): link((std::string)Link){
 }
 
 void WebCommand::UpdateHtml() {
-    _html = "";
+   
     CURL* curl;
     curl = curl_easy_init();
     curl_easy_setopt(curl, CURLOPT_URL, link.c_str());
@@ -23,7 +22,13 @@ void WebCommand::UpdateHtml() {
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &_html);
     curl_easy_perform(curl);
     curl_easy_cleanup(curl);
-    //std::clog << _html << std::endl;       
+    std::clog << _html << std::endl;       
+}
+
+std::any WebCommand::getValues()
+{
+    std::tuple<std::string, int> a = std::make_tuple(getRgb(), getFanspeed());
+    return a;
 }
 
 std::string WebCommand::findValue(std::string parameter) {

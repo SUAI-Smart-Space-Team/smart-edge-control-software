@@ -2,11 +2,13 @@
 #define COMMANDINTERFACE_H
 #include <string>
 #include <iostream>
+#include <tuple>
+#include <any>
+
 class CommandInterface
 {
 public:
-	virtual std::string getRgb() = 0;
-	virtual int getFanspeed() = 0;
+	virtual std::any getValues() = 0;
 };
 
 #endif

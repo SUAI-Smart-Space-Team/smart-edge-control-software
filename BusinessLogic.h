@@ -5,6 +5,6 @@
 class BusinessLogic
 {
 public:
-	BusinessLogic(CommandInterface* ci, DeviceInterface* di);
+	BusinessLogic(CommandInterface& ci, DeviceInterface& di);
 };
 #endif
