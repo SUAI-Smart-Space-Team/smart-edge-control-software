@@ -1,8 +1,6 @@
 ﻿#include "Device.h"
 #include <wiringPi.h>
 #include <wiringSerial.h>
-#include <iostream>
-#include <string>
 
 int Device::convertPercentageToPwm(int percent)
 {
@@ -25,7 +23,7 @@ Device::Device()
     pinMode(1, PWM_OUTPUT);
     port = serialOpen("/dev/ttyUSB0", 9600);
     while (port == -1) {
-        std::cerr << "failed to open port,trying again";
+        std::cerr << "failed to open port,trying again\n";
         port = serialOpen("/dev/ttyUSB0", 9600);
     }
 }

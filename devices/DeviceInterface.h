@@ -1,7 +1,7 @@
 #ifndef DEVICEINTERFACE_H
 #define DEVICEINTERFACE_H
+#include <iostream>
 #include <string>
-#include <tuple>
 #include <any>
 class DeviceInterface
 {

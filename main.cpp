@@ -1,7 +1,7 @@
 #include "BusinessLogic.h"
 #include <chrono>
 #include <thread>
-#include<string_view>
+#include <string_view>
 
 #include "devices/Device.h"
 #include "commands/WebCommand.h"

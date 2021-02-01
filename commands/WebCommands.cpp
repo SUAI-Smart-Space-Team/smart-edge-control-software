@@ -1,34 +1,28 @@
 #include "WebCommand.h"
-#include<iostream>
-#include <string>
 
-#include <curl/curl.h>
-static size_t write_data(char* ptr, size_t size, size_t nmemb, std::string& data)
-{
+static size_t write_data(char* ptr, size_t size, size_t nmemb, std::string& data) {
     data = (std::string)ptr;
     return size * nmemb;
 }
 
-WebCommand::WebCommand(std::string_view Link): link((std::string)Link){
- 
+WebCommand::WebCommand(std::string_view Link): link((std::string)Link) {
+    curl = curl_easy_init();
+    while (curl == NULL) {
+        curl = curl_easy_init();
+    }
+    curl_easy_setopt(curl, CURLOPT_URL, link.c_str());
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+    curl_easy_perform(curl);
 }
 
 void WebCommand::UpdateHtml() {
-   
-    CURL* curl;
-    curl = curl_easy_init();
-    curl_easy_setopt(curl, CURLOPT_URL, link.c_str());
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &_html);
     curl_easy_perform(curl);
-    curl_easy_cleanup(curl);
-    std::clog << _html << std::endl;       
 }
 
-std::any WebCommand::getValues()
-{
-    std::tuple<std::string, int> a = std::make_tuple(getRgb(), getFanspeed());
-    return a;
+std::any WebCommand::getValues() {
+    WebCommand::UpdateHtml();
+    return std::make_tuple(getRgb(), getFanspeed());
 }
 
 std::string WebCommand::findValue(std::string parameter) {
@@ -48,12 +42,15 @@ std::string WebCommand::findValue(std::string parameter) {
     }
 }
 
+WebCommand::~WebCommand(){
+    curl_easy_cleanup(curl);
+}
+
 int WebCommand::getFanspeed() {
-    WebCommand::UpdateHtml();
     try {
         int fan = stoi(findValue(std::string("coolerSpeed")));
         if (fan < 0 || fan > 100) {
-            std::cerr << "wrong fan speed: " << fan << std::endl;
+            std::cerr << "wrong fan speed: " << fan << "\n";
             return -1;
         }
         return fan;
@@ -69,7 +66,6 @@ int WebCommand::getFanspeed() {
 }
 
 std::string WebCommand::getRgb() {
-    WebCommand::UpdateHtml();
     try {
         std::string pColor = findValue(std::string("pumpColor"));
         std::string cColor = findValue(std::string("coolerColor"));
@@ -79,7 +75,6 @@ std::string WebCommand::getRgb() {
         std::cerr << "caught wrong argument exception with string: " << err.what();
         return "";
     }
-    
 }
 
 

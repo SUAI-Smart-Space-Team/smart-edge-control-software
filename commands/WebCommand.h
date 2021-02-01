@@ -1,8 +1,9 @@
 #ifndef WEBCOMMAND_H
 #define WEBCOMMAND_H
-#include <string>
-#include <tuple>
 #include "CommandInterface.h"
+
+#include <curl/curl.h>
+
 class WebCommand : public CommandInterface {
 public:
 	explicit WebCommand(std::string_view Link);
@@ -11,7 +12,9 @@ public:
 	int getFanspeed();
 	std::string getRgb();
 	std::string findValue(std::string parameter);
+	~WebCommand();
 private:
+	CURL* curl;
 	std::string _html;
 	std::string link;
 };
