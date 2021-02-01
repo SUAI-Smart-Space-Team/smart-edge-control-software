@@ -6,7 +6,7 @@
 #include "devices/Device.h"
 #include "commands/WebCommand.h"
 int main() {
-	std::string_view Link = "http://chupr.iotfox.ru/chubrWorker.cgi?method=getTelemetry";
+	constexpr std::string_view Link = "http://chupr.iotfox.ru/chubrWorker.cgi?method=getTelemetry";
 	WebCommand wc(Link);
 	Device d;
 	CommandInterface& ci = wc;
