@@ -1,4 +1,6 @@
 #include "WebCommand.h"
+#include <chrono>
+#include <thread>
 
 static size_t write_data(char* ptr, size_t size, size_t nmemb, std::string& data) {
     data = (std::string)ptr;
@@ -9,6 +11,7 @@ WebCommand::WebCommand(std::string_view Link): link((std::string)Link) {
     curl = curl_easy_init();
     while (curl == NULL) {
         curl = curl_easy_init();
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
     curl_easy_setopt(curl, CURLOPT_URL, link.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);

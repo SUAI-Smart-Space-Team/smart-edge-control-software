@@ -15,5 +15,4 @@ int main() {
 		BusinessLogic(ci, di);
 		std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 	}
-	return 0;
 }
