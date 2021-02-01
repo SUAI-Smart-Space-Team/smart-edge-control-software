@@ -12,7 +12,6 @@ WebCommand::WebCommand(std::string_view Link): link((std::string)Link) {
     }
     curl_easy_setopt(curl, CURLOPT_URL, link.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
-    curl_easy_perform(curl);
 }
 
 void WebCommand::UpdateHtml() {
