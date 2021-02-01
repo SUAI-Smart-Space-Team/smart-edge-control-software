@@ -3,30 +3,36 @@
 #include <wiringSerial.h>
 #include <iostream>
 #include <string>
-#include <tuple>
 
 int Device::convertPercentageToPwm(int percent)
 {
     return percent * 10;
 }
 void Device::setSpeed(int fanSpeedPercentage) {
-    wiringPiSetup();
     if (fanSpeedPercentage != -1) {
-        pinMode(1, PWM_OUTPUT);
         pwmWrite(1, convertPercentageToPwm(fanSpeedPercentage));
     }
 }
 void Device::setRgb(std::string rgbString) {
     if (!rgbString.empty()) {
-        int port = serialOpen("/dev/ttyUSB0", 9600);
-        if (port != -1) {
             serialPuts(port, rgbString.c_str());
-            serialClose(port);
-        }
-        else {
-            std::cerr << "Port opening error" << std::endl;
-        }
     }
+}
+
+Device::Device()
+{
+    wiringPiSetup();
+    pinMode(1, PWM_OUTPUT);
+    port = serialOpen("/dev/ttyUSB0", 9600);
+    while (port == -1) {
+        std::cerr << "failed to open port,trying again";
+        port = serialOpen("/dev/ttyUSB0", 9600);
+    }
+}
+
+Device::~Device()
+{
+    serialClose(port);
 }
 
 void Device::setValues(std::any param)
