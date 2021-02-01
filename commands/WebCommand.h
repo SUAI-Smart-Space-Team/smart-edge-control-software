@@ -3,6 +3,7 @@
 #include "CommandInterface.h"
 
 #include <curl/curl.h>
+#include <tuple>
 
 class WebCommand : public CommandInterface {
 public:

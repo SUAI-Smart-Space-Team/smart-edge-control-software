@@ -1,6 +1,7 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 #include "DeviceInterface.h"
+#include <tuple>
 class Device : public DeviceInterface
 {
 public:
