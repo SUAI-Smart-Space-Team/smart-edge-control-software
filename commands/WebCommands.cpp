@@ -2,24 +2,24 @@
 #include <chrono>
 #include <thread>
 
-static size_t write_data(char* ptr, size_t size, size_t nmemb, std::string& data) {
-    data = (std::string)ptr;
+static size_t write_data(char* ptr, const size_t size, const size_t nmemb, std::string& data) {
+    data = static_cast<std::string>(ptr);
     return size * nmemb;
 }
 
-WebCommand::WebCommand(std::string_view Link): link((std::string)Link) {
-    curl = curl_easy_init();
-    while (curl == NULL) {
-        curl = curl_easy_init();
+WebCommand::WebCommand(const std::string_view link): link_(static_cast<std::string>(link)) {
+    curl_ = curl_easy_init();
+    while (curl_ == nullptr) {
+        curl_ = curl_easy_init();
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-    curl_easy_setopt(curl, CURLOPT_URL, link.c_str());
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+    curl_easy_setopt(curl_, CURLOPT_URL, link_.c_str());
+    curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, write_data);
 }
 
 void WebCommand::UpdateHtml() {
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &_html);
-    curl_easy_perform(curl);
+    curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &html_);
+    curl_easy_perform(curl_);
 }
 
 std::any WebCommand::getValues() {
@@ -28,29 +28,29 @@ std::any WebCommand::getValues() {
 }
 
 std::string WebCommand::findValue(std::string parameter) {
-    int from = _html.find(parameter);
-    if (_html.find(parameter, from + 1) != std::string::npos) {
-        throw std::invalid_argument(_html.c_str());
+    int from = html_.find(parameter);
+    if (html_.find(parameter, from + 1) != std::string::npos) {
+        throw std::invalid_argument(html_.c_str());
     }
-    from = _html.find(':', from);
-    from = _html.find("\"", from);
-    int to = _html.find("\"", from + 1);
-    const char* quote = "%22";
-    if (_html.find(quote, from + 1, to - from - 1) == std::string::npos) {
-        return _html.substr(from + 1, to - from - 1);
+    from = html_.find(':', from);
+    from = html_.find('\"', from);
+    const int to = html_.find('\"', from + 1);
+    const auto quote = "%22";
+    if (html_.find(quote, from + 1, to - from - 1) == std::string::npos) {
+        return html_.substr(from + 1, to - from - 1);
     }
     else {
-        throw std::invalid_argument(_html.c_str());
+        throw std::invalid_argument(html_.c_str());
     }
 }
 
 WebCommand::~WebCommand(){
-    curl_easy_cleanup(curl);
+    curl_easy_cleanup(curl_);
 }
 
 int WebCommand::getFanspeed() {
     try {
-        int fan = stoi(findValue(std::string("coolerSpeed")));
+        const auto fan = stoi(findValue(std::string("coolerSpeed")));
         if (fan < 0 || fan > 100) {
             std::cerr << "wrong fan speed: " << fan << "\n";
             return -1;
@@ -69,8 +69,8 @@ int WebCommand::getFanspeed() {
 
 std::string WebCommand::getRgb() {
     try {
-        std::string pColor = findValue(std::string("pumpColor"));
-        std::string cColor = findValue(std::string("coolerColor"));
+        const auto pColor = findValue(std::string("pumpColor"));
+        const auto cColor = findValue(std::string("coolerColor"));
         return pColor + " " + cColor;
     }
     catch (const std::invalid_argument& err) {

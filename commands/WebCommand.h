@@ -7,7 +7,7 @@
 
 class WebCommand : public CommandInterface {
 public:
-	explicit WebCommand(std::string_view Link);
+	explicit WebCommand(std::string_view link);
 	void UpdateHtml();
 	std::any getValues() override;
 	int getFanspeed();
@@ -15,8 +15,8 @@ public:
 	std::string findValue(std::string parameter);
 	~WebCommand();
 private:
-	CURL* curl;
-	std::string _html;
-	std::string link;
+	CURL* curl_;
+	std::string html_;
+	std::string link_;
 };
 #endif

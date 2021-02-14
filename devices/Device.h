@@ -7,12 +7,12 @@ class Device : public DeviceInterface
 public:
     Device();
     ~Device();
-    void setValues(std::any param);
+    void setValues(std::any param) override;
 
 private:
-    void setSpeed(int fan);
+    void setSpeed(int fanSpeedPercentage);
     void setRgb(std::string rgbstring);
     int convertPercentageToPwm(int percent);
-    int port;
+    int port_;
 };
 #endif
