@@ -23,24 +23,29 @@ void WebCommand::UpdateHtml() {
 }
 
 std::any WebCommand::getValues() {
-    WebCommand::UpdateHtml();
+    UpdateHtml();
     return std::make_tuple(getRgb(), getFanspeed());
 }
 
-std::string WebCommand::findValue(std::string parameter) {
-    int from = html_.find(parameter);
-    if (html_.find(parameter, from + 1) != std::string::npos) {
-        throw std::invalid_argument(html_.c_str());
+std::string WebCommand::findValue(std::string parameter) const { 
+    return findValue(parameter, html_);
+}
+
+std::string WebCommand::findValue(std::string parameter, std::string source)
+{
+    int from = source.find(parameter);
+    if (source.find(parameter, from + 1) != std::string::npos) {
+        throw std::invalid_argument(source.c_str());
     }
-    from = html_.find(':', from);
-    from = html_.find('\"', from);
-    const int to = html_.find('\"', from + 1);
+    from = source.find(':', from);
+    from = source.find('\"', from);
+    const int to = source.find('\"', from + 1);
     const auto quote = "%22";
-    if (html_.find(quote, from + 1, to - from - 1) == std::string::npos) {
-        return html_.substr(from + 1, to - from - 1);
+    if (source.find(quote, from + 1, to - from - 1) == std::string::npos) {
+        return source.substr(from + 1, to - from - 1);
     }
     else {
-        throw std::invalid_argument(html_.c_str());
+        throw std::invalid_argument(source.c_str());
     }
 }
 
@@ -48,7 +53,7 @@ WebCommand::~WebCommand(){
     curl_easy_cleanup(curl_);
 }
 
-int WebCommand::getFanspeed() {
+int WebCommand::getFanspeed() const {
     try {
         const auto fan = stoi(findValue(std::string("coolerSpeed")));
         if (fan < 0 || fan > 100) {
@@ -67,7 +72,7 @@ int WebCommand::getFanspeed() {
     }
 }
 
-std::string WebCommand::getRgb() {
+std::string WebCommand::getRgb() const {
     try {
         const auto pColor = findValue(std::string("pumpColor"));
         const auto cColor = findValue(std::string("coolerColor"));

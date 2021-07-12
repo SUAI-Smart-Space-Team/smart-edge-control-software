@@ -10,10 +10,11 @@ public:
 	explicit WebCommand(std::string_view link);
 	void UpdateHtml();
 	std::any getValues() override;
-	int getFanspeed();
-	std::string getRgb();
-	std::string findValue(std::string parameter);
-	~WebCommand();
+	int getFanspeed() const;
+	std::string getRgb() const;
+	std::string findValue(std::string parameter) const;
+	static std::string findValue(std::string parameter, std::string source);
+	~WebCommand() override;
 private:
 	CURL* curl_;
 	std::string html_;

@@ -7,6 +7,7 @@
 class CommandInterface
 {
 public:
+	virtual ~CommandInterface() = default;
 	virtual std::any getValues() = 0;
 };
 
