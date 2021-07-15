@@ -15,12 +15,12 @@ TEST(findValue_tests, standart)
 
 TEST(findValue_tests, quote)
 {
-	ASSERT_EQ(WebCommand::findValue("quote_test", json), "\"");
+	ASSERT_EQ(WebCommand::findValue("quote_test", json), "\\");
 }
 
 TEST(findValue_tests, voidtest)
 {
-	ASSERT_EQ(WebCommand::findValue("void_test", json), "");
+	ASSERT_THROW(WebCommand::findValue("void_test", json),std::exception);
 }
 
 int main(int argc, char* argv[])
