@@ -23,12 +23,11 @@ Device::Device()
 {
     wiringPiSetup();
     pinMode(1, PWM_OUTPUT);
-    port_ = serialOpen("/dev/ttyUSB0", 9600);
     do {
         port_ = serialOpen("/dev/ttyUSB0", 9600);
         if (port_ == -1){ 
             std::cerr << "failed to open port,trying again\n";
-            std::this_thread::sleep_for(std::chrono::milliseconds(100)); 
+            std::this_thread::sleep_for(std::chrono::milliseconds(5000)); 
         }
     } while (port_ == -1);
 }

@@ -5,8 +5,15 @@
 
 #include "devices/Device.h"
 #include "commands/WebCommand.h"
-int main() {
-	constexpr std::string_view link = "http://chupr.iotfox.ru/chubrWorker.cgi?method=getTelemetry";
+int main(int argc, char* argv[]) {
+	std::string_view link;
+	if (argc > 1)
+	{
+		 link = std::string_view(argv[1]);
+	}
+	else {
+		 link = "http://chupr.iotfox.ru/chubrWorker.cgi?method=getTelemetry";
+	}
 	WebCommand wc(link);
 	Device d;
 	CommandInterface& ci = wc;
