@@ -14,5 +14,6 @@ private:
     void setRgb(std::string rgbstring);
     int convertPercentageToPwm(int percent);
     int port_;
+    bool failedToOpenPort;
 };
 #endif
